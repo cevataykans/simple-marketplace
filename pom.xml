@@ -92,6 +92,7 @@
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-mongodb</artifactId>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.mongodb</groupId>
@@ -151,6 +152,11 @@
                  <artifactId>micronaut-serde-processor</artifactId>
                  <version>${micronaut.serialization.version}</version>
                </annotationProcessorPath>
+                <path>
+                  <groupId>io.micronaut.data</groupId>
+                  <artifactId>micronaut-data-document-processor</artifactId>
+                  <version>${micronaut.version}</version>
+                </path>
               </annotationProcessorPaths>
               <annotationProcessorArgs>
                 <annotationProcessorArg>micronaut.processing.group=simple.marketplace</annotationProcessorArg>
@@ -184,12 +190,6 @@
                  <artifactId>micronaut-inject-java</artifactId>
                  <version>${micronaut.core.version}</version>
                </annotationProcessorPath>
-                <annotationProcessorPaths>
-                  <path>
-                    <groupId>io.micronaut.data</groupId>
-                    <artifactId>micronaut-data-document-processor</artifactId>
-                  </path>
-                </annotationProcessorPaths>
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>
                  <artifactId>micronaut-graal</artifactId>
