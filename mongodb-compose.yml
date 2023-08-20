@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    container_name: online_marketplace_db
+    volumes:
+      - mongo_vol:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+  app:
+    image: online_marketplace
+    build: .
+    restart: always
+    container_name: simple_online_marketplace
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+volumes:
+  mongo_vol:
