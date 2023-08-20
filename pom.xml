@@ -89,6 +89,15 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver-sync</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -175,6 +184,12 @@
                  <artifactId>micronaut-inject-java</artifactId>
                  <version>${micronaut.core.version}</version>
                </annotationProcessorPath>
+                <annotationProcessorPaths>
+                  <path>
+                    <groupId>io.micronaut.data</groupId>
+                    <artifactId>micronaut-data-document-processor</artifactId>
+                  </path>
+                </annotationProcessorPaths>
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>
                  <artifactId>micronaut-graal</artifactId>
