@@ -11,7 +11,7 @@ const val REPOSITORY = "products"
 data class Product(
         @field:Id
         @GeneratedValue
-        val id: ObjectId,
+        val id: ObjectId = ObjectId(""),
         var name: String,
         var description: String,
         var price: Double)
