@@ -3,15 +3,23 @@ package simple.marketplace.entities
 import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
-import org.bson.types.ObjectId
 
-const val REPOSITORY = "products"
+const val REPOSITORY = "product"
 
-@MappedEntity(value = REPOSITORY)
+@MappedEntity
 data class Product(
-        @field:Id
-        @GeneratedValue
-        val id: ObjectId = ObjectId(""),
-        var name: String,
-        var description: String,
-        var price: Double)
+    @field:Id
+    @field:GeneratedValue(GeneratedValue.Type.IDENTITY)
+    val id: Long? = null,
+    var name: String,
+    var description: String,
+    var price: Float
+) {
+
+    override fun equals(other: Any?): Boolean {
+        return (other is Product)
+                && this.name == other.name
+                && this.description == other.description
+                && this.price == other.price
+    }
+}
