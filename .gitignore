@@ -31,7 +31,6 @@ out/
 bin/
 .settings/
 .project
-*/test/
 */META-INF/
 *.ipr
 *.iws
