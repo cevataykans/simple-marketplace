@@ -4,9 +4,9 @@ import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 
-const val REPOSITORY = "product"
+const val REPOSITORY = "products"
 
-@MappedEntity
+@MappedEntity(value = REPOSITORY)
 data class Product(
     @field:Id
     @field:GeneratedValue(GeneratedValue.Type.IDENTITY)
