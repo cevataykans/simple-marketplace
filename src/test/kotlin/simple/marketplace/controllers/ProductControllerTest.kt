@@ -47,7 +47,7 @@ class ProductControllerTest(
     }
 
     @Test
-    fun testGetNotFound() {
+    fun givenGetWithNonExistingId_thenReturnsNotFound() {
         val nonExistingId: Long = products[products.size - 1].id!! + 1
         val thrown = assertThrows<HttpClientResponseException> {
             client.toBlocking().exchange<Any>("/$nonExistingId")
@@ -69,6 +69,11 @@ class ProductControllerTest(
     }
 
     @Test
+    fun testGetAll() {
+
+    }
+
+    @Test
     fun testCreate() {
         val toCreate = generate()
         val request = HttpRequest.POST("/", toCreate)
@@ -78,6 +83,11 @@ class ProductControllerTest(
         val created = response.body()
         assertTrue(created.id != null)
         assertEquals(toCreate, created)
+    }
+
+    @Test
+    fun givenCreateWithId_thenReturnsBadRequest() {
+
     }
 
     @Test
@@ -97,6 +107,21 @@ class ProductControllerTest(
     }
 
     @Test
+    fun givenUpdateWithNoId_thenReturnsBadRequest() {
+
+    }
+
+    @Test
+    fun givenUpdateWithNonMatchingIds_thenReturnsBadRequest() {
+
+    }
+
+    @Test
+    fun givenUpdateNonExistingProduct_thenReturnsNotFound() {
+
+    }
+
+    @Test
     fun testDelete() {
         val deleteId = products[0].id!!
 
@@ -109,5 +134,10 @@ class ProductControllerTest(
         }
         assertNotNull(thrown.response)
         assertEquals(HttpStatus.NOT_FOUND, thrown.status)
+    }
+
+    @Test
+    fun testDeleteNonExisting() {
+
     }
 }
