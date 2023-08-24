@@ -27,7 +27,7 @@ class ProductService {
             throw Exception("Product does not exist")
         }
 
-        return productRepository.save(product)
+        return productRepository.update(product)
     }
 
     fun delete(id: Long) {
