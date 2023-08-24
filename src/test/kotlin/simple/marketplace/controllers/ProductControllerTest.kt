@@ -98,5 +98,16 @@ class ProductControllerTest(
 
     @Test
     fun testDelete() {
+        val deleteId = products[0].id!!
+
+        val request = HttpRequest.DELETE<Product>("/$deleteId")
+        val response = client.toBlocking().exchange(request, Product::class.java)
+        assertEquals(HttpStatus.NO_CONTENT, response.status)
+
+        val thrown = assertThrows<HttpClientResponseException> {
+            client.toBlocking().exchange<Any>("/$$deleteId")
+        }
+        assertNotNull(thrown.response)
+        assertEquals(HttpStatus.NOT_FOUND, thrown.status)
     }
 }
