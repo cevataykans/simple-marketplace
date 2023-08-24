@@ -17,4 +17,10 @@ open class ProductController(var service: ProductService) {
         val found = service.getById(id)
         return HttpResponse.ok(found)
     }
+
+    @Get
+    fun getAll(): HttpResponse<List<Product>> {
+        val all = service.getAll()
+        return HttpResponse.ok(all)
+    }
 }
