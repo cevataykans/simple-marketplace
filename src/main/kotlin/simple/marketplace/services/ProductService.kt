@@ -23,9 +23,11 @@ class ProductService {
             throw Exception("id must be set")
         }
 
-        //TODO: check if product exists in db, if not, throw bad req error
+        if (!productRepository.existsById(product.id)) {
+            throw Exception("Product does not exist")
+        }
 
-        return productRepository.save(product)
+        return productRepository.update(product)
     }
 
     fun delete(id: Long) {
@@ -39,7 +41,7 @@ class ProductService {
     fun getById(id: Long): Product {
         val res = productRepository.findById(id)
         if (res.isEmpty) {
-            throw RuntimeException("Product not found")
+            throw Exception("Product not found")
         }
         return res.get()
     }
