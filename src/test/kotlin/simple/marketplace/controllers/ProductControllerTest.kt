@@ -70,6 +70,14 @@ class ProductControllerTest(
 
     @Test
     fun testCreate() {
+        val toCreate = generate()
+        val request = HttpRequest.POST("/", toCreate)
+        val response = client.toBlocking().exchange(request, Product::class.java)
+
+        assertEquals(HttpStatus.OK, response.status)
+        val created = response.body()
+        assertTrue(created.id != null)
+        assertEquals(toCreate, created)
     }
 
     @Test
