@@ -1,12 +1,13 @@
 package simple.marketplace.controllers
 
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
-import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import simple.marketplace.entities.Product
 import simple.marketplace.repositories.ProductRepository
 import kotlin.random.Random
@@ -47,17 +48,28 @@ class ProductControllerTest(
 
     @Test
     fun testGetNotFound() {
-        //TODO: implement
+        val lastId: Long = products[products.size - 1].id!! + 1
+        val thrown = assertThrows<HttpClientResponseException> {
+            client.toBlocking().exchange<Any>("/$lastId")
+        }
+        assertNotNull(thrown.response)
+        assertEquals(HttpStatus.NOT_FOUND, thrown.status)
     }
 
     @Test
     fun testGet() {
+        val toGet: Product = products[0]
+        val id: Long = toGet.id!!
 
+        val request = HttpRequest.GET<Product>("/$id")
+        val response = client.toBlocking().exchange(request, Product::class.java)
+
+        assertEquals(HttpStatus.OK, response.status)
+        assertEquals(toGet, response.body())
     }
 
     @Test
     fun testCreate() {
-
     }
 
     @Test
