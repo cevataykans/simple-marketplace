@@ -10,7 +10,7 @@ const val REPOSITORY = "product"
 data class Product(
     @field:Id
     @field:GeneratedValue(GeneratedValue.Type.IDENTITY)
-    val id: Long? = null,
+    var id: Long? = null,
     var name: String,
     var description: String,
     var price: Float
