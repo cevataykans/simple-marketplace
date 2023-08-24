@@ -5,12 +5,16 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.*
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
+import jakarta.inject.Inject
 import simple.marketplace.entities.Product
 import simple.marketplace.services.ProductService
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/products")
-open class ProductController(var service: ProductService) {
+open class ProductController {
+
+    @Inject
+    private lateinit var service: ProductService
 
     @Get("/{id}")
     fun getById(id: Long): HttpResponse<Product> {

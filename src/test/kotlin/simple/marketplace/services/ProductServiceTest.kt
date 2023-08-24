@@ -10,13 +10,13 @@ import simple.marketplace.repositories.ProductRepository
 import kotlin.random.Random
 
 @MicronautTest
-class ProductServiceTest() {
+class ProductServiceTest {
 
     @Inject
-    lateinit var service: ProductService
+    private lateinit var service: ProductService
 
     @Inject
-    lateinit var repository: ProductRepository
+    private lateinit var repository: ProductRepository
 
     private var id: Int = 0
     private fun generate(): Product {
@@ -27,7 +27,7 @@ class ProductServiceTest() {
 
     private fun generateAndSave(): Product {
         val product = generate()
-        return service.create(product)
+        return repository.save(product)
     }
 
     @AfterEach
@@ -45,7 +45,7 @@ class ProductServiceTest() {
 
     @Test
     fun givenCreateProductWithId_ThenThrowsException() {
-        var product = generate()
+        val product = generate()
         product.id = 10
         //TODO: generate meaningful errors
         Assertions.assertThrows(Exception::class.java) {
