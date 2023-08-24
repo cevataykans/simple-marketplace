@@ -48,9 +48,9 @@ class ProductControllerTest(
 
     @Test
     fun testGetNotFound() {
-        val lastId: Long = products[products.size - 1].id!! + 1
+        val nonExistingId: Long = products[products.size - 1].id!! + 1
         val thrown = assertThrows<HttpClientResponseException> {
-            client.toBlocking().exchange<Any>("/$lastId")
+            client.toBlocking().exchange<Any>("/$nonExistingId")
         }
         assertNotNull(thrown.response)
         assertEquals(HttpStatus.NOT_FOUND, thrown.status)
@@ -82,11 +82,21 @@ class ProductControllerTest(
 
     @Test
     fun testUpdate() {
+        val toUpdate = products[1]
+        toUpdate.name = "Updated name"
+        toUpdate.description = "Updated description"
+        toUpdate.price += 123.45f
 
+        val id: Long = toUpdate.id!!
+        val request = HttpRequest.PUT("/$id", toUpdate)
+        val response = client.toBlocking().exchange(request, Product::class.java)
+
+        assertEquals(HttpStatus.OK, response.status)
+        val updated = response.body()
+        assertEquals(toUpdate, updated)
     }
 
     @Test
     fun testDelete() {
-
     }
 }
