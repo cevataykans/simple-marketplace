@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS products;
 
-CREATE TABLE product
+CREATE TABLE products
 (
     id          BIGSERIAL PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,

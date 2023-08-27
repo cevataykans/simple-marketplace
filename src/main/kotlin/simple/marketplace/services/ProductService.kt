@@ -1,7 +1,12 @@
 package simple.marketplace.services
 
+import io.micronaut.http.HttpStatus
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
+import simple.marketplace.core.errors.ApiException
+import simple.marketplace.core.errors.ID_NOT_FOUND_ERR
+import simple.marketplace.core.errors.ID_POST_ERR
+import simple.marketplace.core.errors.INVALID_ID_ERR
 import simple.marketplace.entities.Product
 import simple.marketplace.repositories.ProductRepository
 
@@ -13,18 +18,18 @@ class ProductService {
 
     fun create(product: Product): Product {
         if (product.id != null) {
-            throw Exception("id cannot be set")
+            throw ApiException(ID_POST_ERR, HttpStatus.BAD_REQUEST)
         }
         return productRepository.save(product)
     }
 
     fun update(product: Product): Product {
         if (product.id == null) {
-            throw Exception("id must be set")
+            throw ApiException(INVALID_ID_ERR, HttpStatus.BAD_REQUEST)
         }
 
         if (!productRepository.existsById(product.id)) {
-            throw Exception("Product does not exist")
+            throw ApiException(ID_NOT_FOUND_ERR, HttpStatus.NOT_FOUND)
         }
 
         return productRepository.update(product)
@@ -41,7 +46,7 @@ class ProductService {
     fun getById(id: Long): Product {
         val res = productRepository.findById(id)
         if (res.isEmpty) {
-            throw Exception("Product not found")
+            throw ApiException(ID_NOT_FOUND_ERR, HttpStatus.NOT_FOUND)
         }
         return res.get()
     }
