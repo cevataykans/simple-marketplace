@@ -47,7 +47,6 @@ class ProductServiceTest {
     fun givenCreateProductWithId_ThenThrowsException() {
         val product = generate()
         product.id = 10
-        //TODO: generate meaningful errors
         Assertions.assertThrows(Exception::class.java) {
             service.create(product)
         }
@@ -90,7 +89,6 @@ class ProductServiceTest {
     fun givenUpdateProductWithNoId_ThenThrowsException() {
         val toUpdate = generate()
         toUpdate.id = null
-        //TODO: generate meaningful errors
         Assertions.assertThrows(Exception::class.java) {
             service.update(toUpdate)
         }
@@ -100,7 +98,6 @@ class ProductServiceTest {
     fun givenUpdateNotExistingProduct_ThenThrowsException() {
         val toUpdate = generateAndSave()
         toUpdate.id = toUpdate.id!! + 1
-        //TODO: generate meaningful errors
         Assertions.assertThrows(Exception::class.java) {
             service.update(toUpdate)
         }

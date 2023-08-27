@@ -50,4 +50,11 @@ class ProductService {
         }
         return res.get()
     }
+
+    fun exists(id: Long?): Boolean {
+        if (id == null) {
+            return false
+        }
+        return productRepository.existsById(id)
+    }
 }
