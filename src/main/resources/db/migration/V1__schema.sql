@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS products;
 
 CREATE TABLE products
@@ -8,14 +9,12 @@ CREATE TABLE products
     price       REAL         NOT NULL
 );
 
-DROP TABLE IF EXISTS orders;
-
 CREATE TABLE orders
 (
-    id        BIGSERIAL PRIMARY KEY,
-    productId BIGSERIAL,
-    quantity  INT,
+    id         BIGSERIAL PRIMARY KEY,
+    product_id BIGSERIAL,
+    quantity   INT,
     CONSTRAINT fk_product
-        FOREIGN KEY (productId)
+        FOREIGN KEY (product_id)
             REFERENCES products (id)
 )

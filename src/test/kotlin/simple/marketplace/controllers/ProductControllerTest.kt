@@ -20,8 +20,7 @@ class ProductControllerTest(
 ) {
 
     private val products: MutableList<Product> = ArrayList()
-
-    //TODO: refactor helper functions
+    
     private var id: Int = 0
     private fun generate(): Product {
         val product = Product(null, "test product - $id", "test description - $id", Random.nextFloat() * 10)
