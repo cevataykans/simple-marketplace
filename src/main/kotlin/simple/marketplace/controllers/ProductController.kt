@@ -35,8 +35,7 @@ open class ProductController {
         val all = service.getAll()
         return HttpResponse.ok(all)
     }
-
-    //TODO: make sure that product body is a valid Product, no field (name, id, description, price) must be deserialized!
+    
     //TODO: try making idempotent
     @Post
     @Consumes(MediaType.APPLICATION_JSON)
@@ -49,7 +48,6 @@ open class ProductController {
         return HttpResponse.ok(created)
     }
 
-    //TODO: make sure that product body is a valid Product, no field (name, id, description, price) must be deserialized!
     @Put("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
