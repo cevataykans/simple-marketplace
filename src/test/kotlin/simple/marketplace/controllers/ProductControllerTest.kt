@@ -91,6 +91,7 @@ class ProductControllerTest(
         assertEquals(HttpStatus.OK, response.status)
         val created = response.body()
         assertTrue(created.id != null)
+        toCreate.id = created.id
         assertEquals(toCreate, created)
     }
 
