@@ -1,21 +1,21 @@
 version: "3.8"
 
 services:
-  mongo:
-    image: mongo
+  postgres:
+    image: postgres
     container_name: online_marketplace_db
     volumes:
-      - mongo_vol:/data/db
+      - postgres_vol:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
   app:
-    image: online_marketplace
+    image: simplemarket
     build: .
     container_name: simple_online_marketplace
     ports:
       - "8080:8080"
     depends_on:
-      - mongo
+      - postgres
 volumes:
-  mongo_vol:
+  postgres_vol:
