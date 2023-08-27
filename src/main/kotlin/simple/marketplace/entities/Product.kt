@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.PositiveOrZero
 
-const val REPOSITORY = "products"
+const val PRODUCT_REPOSITORY = "products"
 
 @Serdeable
-@MappedEntity(value = REPOSITORY)
+@MappedEntity(value = PRODUCT_REPOSITORY)
 data class Product(
     @field:Id
     @field:GeneratedValue(GeneratedValue.Type.IDENTITY)
@@ -26,6 +26,7 @@ data class Product(
 ) {
     override fun equals(other: Any?): Boolean {
         return (other is Product)
+                && this.id == other.id
                 && this.name == other.name
                 && this.description == other.description
                 && this.price == other.price
