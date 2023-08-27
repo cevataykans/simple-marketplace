@@ -4,6 +4,9 @@ import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.serde.annotation.Serdeable
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.PositiveOrZero
 
 const val REPOSITORY = "products"
 
@@ -13,8 +16,12 @@ data class Product(
     @field:Id
     @field:GeneratedValue(GeneratedValue.Type.IDENTITY)
     var id: Long? = null,
+    @NotNull
+    @NotEmpty
     var name: String,
+    @NotNull
     var description: String,
+    @PositiveOrZero
     var price: Float
 ) {
     override fun equals(other: Any?): Boolean {

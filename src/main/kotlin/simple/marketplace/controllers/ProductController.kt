@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.*
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 import jakarta.inject.Inject
+import jakarta.validation.Valid
 import simple.marketplace.entities.Product
 import simple.marketplace.services.ProductService
 
@@ -31,7 +32,7 @@ open class ProductController {
     //TODO: make sure that product body is a valid Product, no field (name, id, description, price) must be deserialized!
     //TODO: try making idempotent
     @Post
-    fun create(@Body product: Product): HttpResponse<Product> {
+    open fun create(@Body @Valid product: Product): HttpResponse<Product> {
         if (product.id != null) {
             return HttpResponse.badRequest()
         }
@@ -41,7 +42,7 @@ open class ProductController {
 
     //TODO: make sure that product body is a valid Product, no field (name, id, description, price) must be deserialized!
     @Put("/{id}")
-    fun update(id: Long, @Body product: Product): HttpResponse<Product> {
+    open fun update(id: Long, @Body @Valid product: Product): HttpResponse<Product> {
         if (product.id == null) {
             return HttpResponse.badRequest()
         }
