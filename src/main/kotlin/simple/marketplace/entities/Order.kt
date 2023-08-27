@@ -14,15 +14,14 @@ data class Order(
     @field:Id
     @field:GeneratedValue(GeneratedValue.Type.IDENTITY)
     var id: Long? = null,
-    @PositiveOrZero
-    var productId: Long,
+    var product_id: Long,
     @PositiveOrZero
     var quantity: Int
 ) {
     override fun equals(other: Any?): Boolean {
         return (other is Order)
                 && this.id == other.id
-                && this.productId == other.productId
+                && this.product_id == other.product_id
                 && this.quantity == other.quantity
     }
 }

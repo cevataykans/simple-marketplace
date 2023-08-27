@@ -23,7 +23,7 @@ class OrderService {
             throw ApiException(ID_POST_ERR, HttpStatus.BAD_REQUEST)
         }
 
-        if (!productService.exists(order.productId)) {
+        if (!productService.exists(order.product_id)) {
             throw ApiException(INVALID_ID_ERR, HttpStatus.BAD_REQUEST)
         }
 

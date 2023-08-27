@@ -6,16 +6,12 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import simple.marketplace.entities.Order
 import simple.marketplace.entities.Product
-import simple.marketplace.repositories.OrderRepository
 
 @MicronautTest
 class OrderServiceTest {
 
     @Inject
     private lateinit var orderService: OrderService
-
-    @Inject
-    private lateinit var repository: OrderRepository
 
     @Inject
     private lateinit var productService: ProductService
@@ -49,7 +45,7 @@ class OrderServiceTest {
     @Test
     fun givenCreateOrderWithInvalidProductId_ThenThrowsException() {
         val order = generate()
-        order.productId = order.productId + 1000
+        order.product_id = order.product_id + 1000
         Assertions.assertThrows(Exception::class.java) {
             orderService.create(order)
         }
