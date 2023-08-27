@@ -1,5 +1,6 @@
 package simple.marketplace.controllers
 
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
@@ -70,7 +71,15 @@ class ProductControllerTest(
 
     @Test
     fun testGetAll() {
+        val request = HttpRequest.GET<Product>("/")
+        val response = client.toBlocking().exchange(request, Argument.listOf(Product::class.java))
 
+        assertEquals(HttpStatus.OK, response.status)
+        val items: List<Product> = response.body() ?: emptyList()
+        assertTrue(items.size == 3)
+        for (product in products) {
+            assertTrue(items.contains(product))
+        }
     }
 
     @Test
@@ -87,7 +96,15 @@ class ProductControllerTest(
 
     @Test
     fun givenCreateWithId_thenReturnsBadRequest() {
+        val toCreate = generate()
+        toCreate.id = 123
 
+        val request = HttpRequest.POST("/", toCreate)
+        val thrown = assertThrows<HttpClientResponseException> {
+            client.toBlocking().exchange(request, Product::class.java)
+        }
+        assertNotNull(thrown.response)
+        assertEquals(HttpStatus.BAD_REQUEST, thrown.status)
     }
 
     @Test
@@ -108,17 +125,53 @@ class ProductControllerTest(
 
     @Test
     fun givenUpdateWithNoId_thenReturnsBadRequest() {
+        val toUpdate = products[0]
+        toUpdate.name = "Updated name"
+        toUpdate.description = "Updated description"
+        toUpdate.price += 43.43f
 
+        val id: Long = toUpdate.id!!
+        toUpdate.id = null
+        val request = HttpRequest.PUT("/$id", toUpdate)
+        val thrown = assertThrows<HttpClientResponseException> {
+            client.toBlocking().exchange(request, Product::class.java)
+        }
+        assertNotNull(thrown.response)
+        assertEquals(HttpStatus.BAD_REQUEST, thrown.status)
     }
 
     @Test
     fun givenUpdateWithNonMatchingIds_thenReturnsBadRequest() {
+        val toUpdate = products[2]
+        toUpdate.name = "Updated name"
+        toUpdate.description = "Updated description"
+        toUpdate.price += 43.43f
 
+        val id: Long = toUpdate.id!!
+        toUpdate.id = toUpdate.id!! + 1
+        val request = HttpRequest.PUT("/$id", toUpdate)
+        val thrown = assertThrows<HttpClientResponseException> {
+            client.toBlocking().exchange(request, Product::class.java)
+        }
+        assertNotNull(thrown.response)
+        assertEquals(HttpStatus.BAD_REQUEST, thrown.status)
     }
 
     @Test
     fun givenUpdateNonExistingProduct_thenReturnsNotFound() {
+        val toUpdate = products[2]
+        toUpdate.name = "Updated name"
+        toUpdate.description = "Updated description"
+        toUpdate.price += 43.43f
 
+        val id: Long = toUpdate.id!! + 10
+        toUpdate.id = toUpdate.id!! + 10
+        val request = HttpRequest.PUT("/$id", toUpdate)
+        val thrown = assertThrows<HttpClientResponseException> {
+            client.toBlocking().exchange(request, Product::class.java)
+        }
+        assertNotNull(thrown.response)
+        assertEquals(HttpStatus.NOT_FOUND, thrown.status)
     }
 
     @Test
@@ -138,6 +191,10 @@ class ProductControllerTest(
 
     @Test
     fun testDeleteNonExisting() {
+        val deleteId = products[2].id!! + 1
 
+        val request = HttpRequest.DELETE<Product>("/$deleteId")
+        val response = client.toBlocking().exchange(request, Product::class.java)
+        assertEquals(HttpStatus.NO_CONTENT, response.status)
     }
 }
