@@ -130,7 +130,7 @@ class ProductControllerTest(
         assertEquals(HttpStatus.NO_CONTENT, response.status)
 
         val thrown = assertThrows<HttpClientResponseException> {
-            client.toBlocking().exchange<Any>("/$$deleteId")
+            client.toBlocking().exchange<Any>("/$deleteId")
         }
         assertNotNull(thrown.response)
         assertEquals(HttpStatus.NOT_FOUND, thrown.status)
