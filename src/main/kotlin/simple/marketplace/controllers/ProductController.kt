@@ -8,6 +8,10 @@ import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 import jakarta.inject.Inject
 import jakarta.validation.Valid
+import simple.marketplace.core.errors.ApiException
+import simple.marketplace.core.errors.ID_MATCH_ERR
+import simple.marketplace.core.errors.ID_POST_ERR
+import simple.marketplace.core.errors.INVALID_ID_ERR
 import simple.marketplace.entities.Product
 import simple.marketplace.services.ProductService
 
@@ -39,7 +43,7 @@ open class ProductController {
     @Produces(MediaType.APPLICATION_JSON)
     open fun create(@Body @Valid product: Product): HttpResponse<Product> {
         if (product.id != null) {
-            return HttpResponse.badRequest()
+            throw ApiException(ID_POST_ERR, HttpStatus.BAD_REQUEST)
         }
         val created = service.create(product)
         return HttpResponse.ok(created)
@@ -51,11 +55,11 @@ open class ProductController {
     @Produces(MediaType.APPLICATION_JSON)
     open fun update(id: Long, @Body @Valid product: Product): HttpResponse<Product> {
         if (product.id == null) {
-            return HttpResponse.badRequest()
+            throw ApiException(INVALID_ID_ERR, HttpStatus.BAD_REQUEST)
         }
 
         if (id != product.id) {
-            return HttpResponse.badRequest()
+            throw ApiException(ID_MATCH_ERR, HttpStatus.BAD_REQUEST)
         }
         return HttpResponse.ok(service.update(product))
     }
