@@ -1,31 +1,34 @@
-## Micronaut 4.0.4 Documentation
+## Installation
 
-- [User Guide](https://docs.micronaut.io/4.0.4/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.0.4/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.0.4/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
+- You need to have a Docker Container environment running [Docker](https://docs.docker.com/engine/install/).
+- Docker Compose required for local deployment [Docker Compose](https://docs.docker.com/compose/install/).
+- Makefile required for simplified command execution.
+    - Makefile is supported by macOS & Linux by default. For Windows, please check the installation suggestions.
+- You need JDK 17.
+- App developed with Micronaut framework & Kotlin. All dependencies are automatically handled by Maven & Docker.
+
 ---
 
-- [Micronaut Maven Plugin documentation](https://micronaut-projects.github.io/micronaut-maven-plugin/latest/)
-## Feature micronaut-aot documentation
+## How to Run (CLI)
 
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
+Change working directory to the project root.
 
+* For running tests, use:
 
-## Feature kapt documentation
+```bash
+make test
+```
 
-- [Micronaut Kotlin Annotation Processing (KAPT) documentation](https://docs.micronaut.io/snapshot/guide/#kapt)
+* For deployment, use:
 
-- [https://kotlinlang.org/docs/kapt.html](https://kotlinlang.org/docs/kapt.html)
+```bash
+make deploy
+```
 
+* For shutting down the deployed app, use:
 
-## Feature maven-enforcer-plugin documentation
+```bash
+make clean
+```
 
-- [https://maven.apache.org/enforcer/maven-enforcer-plugin/](https://maven.apache.org/enforcer/maven-enforcer-plugin/)
-
-
-## Feature serialization-jackson documentation
-
-- [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
-
-
+> Makefile, Docker file, Docker Compose file can be edited for additional customization.
